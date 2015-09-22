@@ -321,6 +321,10 @@ var Selectable = React.createClass({
   _selectElements: function (e) {
     var currentItems = this.state.selectedItems;
 
+    if (this.props.strictSelection && !this.state.isBoxSelecting){
+      return
+    }
+
     this._mouseDownData = null;
 
     React.Children.forEach(this.props.children, function (child) {
