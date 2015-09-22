@@ -58,7 +58,13 @@ var Selectable = React.createClass({
     /**
      * If true, a click will not generate event onSelection
      */
-    disableSingleSelection: React.PropTypes.bool
+    disableSingleSelection: React.PropTypes.bool,
+
+    /**
+     * If true, select will not start selection when you click on child elements.
+     */
+    strictSelection: React.PropTypes.bool,
+
   },
 
   /**
@@ -211,6 +217,12 @@ var Selectable = React.createClass({
       initialW: e.pageX,
       initialH: e.pageY
     };
+
+    if (this.props.strictSelection){
+        if (e.target.getAttribute('data-reactid') !== node.getAttribute('data-reactid')) {
+            return
+        }
+    }
 
     e.preventDefault();
 
