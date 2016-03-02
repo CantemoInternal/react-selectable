@@ -1,5 +1,4 @@
-var React = require('react/addons');
-var cloneWithProps = React.addons.cloneWithProps;
+var React = require('react');
 
 function isNodeInRoot(node, root) {
   while (node) {
@@ -149,7 +148,7 @@ var Selectable = React.createClass({
     <div style={boxStyle} ref="selectbox"><span style={spanStyle}></span></div>
     }
     {React.Children.map(this.props.children, function (child, i) {
-      return cloneWithProps(child, {
+      return React.cloneElement(child, {
         key: child.key || i,
         ref: 'selectable_'+child.key,
         selected: this.state.selectedItems.indexOf(child.key) > -1
