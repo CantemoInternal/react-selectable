@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var cloneWithProps = React.addons.cloneWithProps;
+import PropTypes from 'prop-types';
 
 function isNodeInRoot(node, root) {
   while (node) {
@@ -13,59 +14,6 @@ function isNodeInRoot(node, root) {
 }
 
 var Selectable = React.createClass({
-
-  /**
-   * @type {Object}
-   */
-  propTypes: {
-
-    /**
-     * Event that will fire when items are selected. Passes an array of keys
-     */
-    onSelection: React.PropTypes.func,
-
-    /**
-     * The component that will represent the Selectable DOM node
-     */
-    component: React.PropTypes.oneOfType([
-      React.PropTypes.func,
-      React.PropTypes.string
-    ]),
-
-    /**
-     * Expands the boundary of the selectable area. It can be an integer, which
-     * applies to all sides, or an object containing "top", "bottom", "left",
-     * and "right" values for custom distance on each side
-     */
-    distance: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.number
-    ]),
-
-    /**
-     * Amount of forgiveness an item will offer to the selectbox before registering
-     * a selection, i.e. if only 1px of the item is in the selection, it shouldn't be
-     * included.
-     */
-    tolerance: React.PropTypes.number,
-
-    /**
-     * If true, a click-and-drag with the mouse will generate a select box anywhere
-     * in the document.
-     */
-    globalMouse: React.PropTypes.bool,
-
-    /**
-     * If true, a click will not generate event onSelection
-     */
-    disableSingleSelection: React.PropTypes.bool,
-
-    /**
-     * If true, select will not start selection when you click on child elements.
-     */
-    strictSelection: React.PropTypes.bool,
-
-  },
 
   /**
    * This is stored outside the state, so that setting it doesn't
@@ -451,5 +399,53 @@ var Selectable = React.createClass({
     });
   }
 });
+
+Selectable.propTypes = {
+  /**
+    * Event that will fire when items are selected. Passes an array of keys
+    */
+  onSelection: PropTypes.func,
+
+  /**
+    * The component that will represent the Selectable DOM node
+    */
+  component: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string
+  ]),
+
+  /**
+    * Expands the boundary of the selectable area. It can be an integer, which
+    * applies to all sides, or an object containing "top", "bottom", "left",
+    * and "right" values for custom distance on each side
+    */
+  distance: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number
+  ]),
+
+  /**
+    * Amount of forgiveness an item will offer to the selectbox before registering
+    * a selection, i.e. if only 1px of the item is in the selection, it shouldn't be
+    * included.
+    */
+  tolerance: PropTypes.number,
+
+  /**
+    * If true, a click-and-drag with the mouse will generate a select box anywhere
+    * in the document.
+    */
+  globalMouse: PropTypes.bool,
+
+  /**
+    * If true, a click will not generate event onSelection
+    */
+  disableSingleSelection: PropTypes.bool,
+
+  /**
+    * If true, select will not start selection when you click on child elements.
+    */
+  strictSelection: PropTypes.bool
+};
 
 module.exports = Selectable;
