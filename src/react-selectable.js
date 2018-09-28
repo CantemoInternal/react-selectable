@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var cloneWithProps = React.addons.cloneWithProps;
 import PropTypes from 'prop-types';
 
