@@ -1,4 +1,5 @@
 var React = require('react');
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 function isNodeInRoot(node, root) {
@@ -31,7 +32,7 @@ class Selectable extends React.Component {
    * Attach global event listeners
    */
   componentDidMount() {
-    var node = this.getDOMNode();
+    var node = ReactDOM.findDOMNode(this);
     node.addEventListener('mousedown', this._mouseDown);
     node.addEventListener('keydown', this._keyListener);
     node.addEventListener('keyup', this._keyListener);
@@ -41,7 +42,7 @@ class Selectable extends React.Component {
    * Remove global event listeners
    */
   componentWillUnmount() {
-    var node = this.getDOMNode();
+    var node = ReactDOM.findDOMNode(this);
     node.removeEventListener('mousedown', this._mouseDown);
     node.removeEventListener('keydown', this._keyListener);
     node.removeEventListener('keyup', this._keyListener);
@@ -109,7 +110,7 @@ class Selectable extends React.Component {
    * be added, and if so, attach event listeners
    */
   _mouseDown(e) {
-    var node = this.getDOMNode(),collides, offsetData, distanceData;
+    var node = ReactDOM.findDOMNode(this),collides, offsetData, distanceData;
 
     document.addEventListener('mouseup', this._mouseUp);
 
@@ -166,7 +167,7 @@ class Selectable extends React.Component {
 
     if(!this._mouseDownData) return;
 
-    var inRoot = isNodeInRoot(e.target, this.getDOMNode());
+    var inRoot = isNodeInRoot(e.target, ReactDOM.findDOMNode(this));
     var click = (e.pageX === this._mouseDownData.initialW && e.pageY === this._mouseDownData.initialH);
 
     // Clicks outside the Selectable node should reset clear selection
@@ -200,7 +201,7 @@ class Selectable extends React.Component {
       index;
 
     React.Children.forEach(this.props.children, function (child) {
-      var node = this.refs['selectable_'+child.key].getDOMNode();
+      var node = ReactDOM.findDOMNode(this.refs['selectable_'+child.key]);
       var collision = this._objectsCollide(
         node,
         {
@@ -255,8 +256,8 @@ class Selectable extends React.Component {
 
     React.Children.forEach(this.props.children, function (child) {
       var collision = this._objectsCollide(
-        this.refs.selectbox.getDOMNode(),
-        this.refs['selectable_'+child.key].getDOMNode(),
+        ReactDOM.findDOMNode(this.refs.selectbox),
+        ReactDOM.findDOMNode(this.refs['selectable_'+child.key]),
         this.props.tolerance
       );
       if(collision) {
